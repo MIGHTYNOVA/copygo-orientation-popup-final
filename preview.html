@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CopyGo Pro | Live Button Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --charcoal-deep: #000000;
+      --indigo: #7886ec;
+      --indigo-soft: #bbc4ff;
+      --lime: #c5e552;
+      --alabaster: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--charcoal-deep);
+      color: #fff;
+      font-family: "Manrope", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .preview-card {
+      width: min(700px, 100%);
+      padding: 30px;
+      border: 1px solid rgba(211, 216, 255, 0.48);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(95, 103, 151, 0.25), rgba(24, 24, 29, 0.54) 52%, rgba(76, 82, 107, 0.18));
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 36px;
+      margin: 0 0 15px;
+    }
+    p {
+      font-size: 14px;
+      margin-bottom: 25px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    /* From Uiverse.io by dexter-st */
+    .btn-wrapper {
+      --rad: 16px;
+      --color-wrapper-border: #fff;
+      --color-btn-bg: #f00;
+      --color-btn-text: #000;
+      --color-btn-text-shadow: #fff;
+      --color-btn-inset-shadow: #558;
+      --color-layer-a: #fff;
+      --color-layer-b: #00f;
+      --color-overlay-text: #000;
+      --color-overlay-glow: #fff;
+      --color-overlay-shadow: #0004;
+      --color-overlay-highlight: #fff5;
+
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: clip;
+      overflow-clip-margin: 4px;
+      width: 100%;
+      max-width: 480px;
+
+      border: 2px solid var(--color-wrapper-border);
+      border-radius: var(--rad);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      filter: saturate(0.65) brightness(1.8);
+      margin: 10px 0;
+    }
+
+    .gradient-btn {
+      position: relative;
+      z-index: -1;
+      width: 100%;
+
+      padding: 14px 28px;
+      border: none;
+      border-radius: var(--rad);
+
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+
+      color: var(--color-btn-text);
+      background-color: var(--color-btn-bg);
+      background-size: 200% 200%;
+      box-shadow: inset 0 0 10px 9px var(--color-btn-inset-shadow);
+      text-shadow: 0 1px 3px var(--color-btn-text-shadow);
+
+      cursor: pointer;
+      mix-blend-mode: color-dodge;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .gradient-btn::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--rad);
+      background-size: 200% 200%;
+      mix-blend-mode: difference;
+      z-index: 1;
+    }
+
+    .gradient-layer {
+      position: absolute;
+      pointer-events: none;
+      left: -160px;
+      width: 500%;
+      aspect-ratio: 1;
+      background: radial-gradient(
+        ellipse at 65% 180%,
+        var(--color-layer-a),
+        var(--color-layer-b),
+        var(--color-layer-a),
+        var(--color-layer-b),
+        var(--color-layer-a),
+        var(--color-layer-b),
+        var(--color-layer-a),
+        var(--color-layer-b),
+        var(--color-layer-a),
+        var(--color-layer-b),
+        var(--color-layer-a)
+      );
+      mix-blend-mode: difference;
+      animation: rotate 8s linear infinite;
+    }
+
+    .gradient-layer:last-child {
+      mix-blend-mode: color-dodge;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .text-overlay {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+      width: 100%;
+      padding: 14px 28px;
+      border-radius: var(--rad);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+      color: var(--color-overlay-text);
+      text-shadow: 0 0 4px var(--color-overlay-glow);
+      box-shadow:
+        inset 0 -4px 4px 0 var(--color-overlay-shadow),
+        inset 0 4px 4px 0 var(--color-overlay-highlight);
+      mix-blend-mode: multiply;
+      transition: transform 0.3s ease;
+      animation: opacityPulse 5s ease infinite;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-wrapper:hover .text-overlay { transform: scale(1.05); }
+    .btn-wrapper:hover .gradient-btn { color: #0000; text-shadow: 0 0 0 #0000; }
+    .btn-wrapper:active .text-overlay { transform: scale(0.95); }
+    .btn-wrapper:active .gradient-btn { color: #0000; text-shadow: 0 0 0 #0000; }
+
+    .light {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 50px;
+      width: 80%;
+      height: 1.9rem;
+      aspect-ratio: 1;
+      background-color: #fff5;
+      filter: blur(5px);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.1; }
+    }
+
+    @keyframes opacityPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-card">
+    <h2>CopyGo Pro Button Preview</h2>
+    <p>Live preview of the two custom Uiverse animated gradient buttons.</p>
+
+    <!-- Button 1: Zoom -->
+    <div class="btn-wrapper">
+      <div class="light"></div>
+      <div class="gradient-layer" style="animation-delay: 0s; animation-duration: 25s;"></div>
+      <div class="gradient-layer" style="animation-delay: 0.15s; animation-duration: 15.9s;"></div>
+      <div class="gradient-layer" style="animation-delay: 0.53s; animation-duration: 26.4s;"></div>
+      <div class="gradient-layer" style="animation-delay: 0.45s; animation-duration: 17.8s;"></div>
+      <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 19.2s;"></div>
+      <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 29.2s;"></div>
+      <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 20.2s;"></div>
+      <button class="gradient-btn">🎥 Join 20-min free Zoom meeting</button>
+      <div class="text-overlay">🎥 Join 20-min free Zoom meeting</div>
+    </div>
+
+    <br>
+
+    <!-- Button 2: WhatsApp -->
+    <div class="btn-wrapper">
+      <div class="light"></div>
+      <div class="gradient-layer" style="animation-delay: 0s; animation-duration: 25s;"></div>
+      <div class="gradient-layer" style="animation-delay: 0.15s; animation-duration: 15.9s;"></div>
+      <div class="gradient-layer" style="animation-delay: 0.53s; animation-duration: 26.4s;"></div>
+      <div class="gradient-layer" style="animation-delay: 0.45s; animation-duration: 17.8s;"></div>
+      <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 19.2s;"></div>
+      <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 29.2s;"></div>
+      <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 20.2s;"></div>
+      <button class="gradient-btn">💬 Message on WhatsApp</button>
+      <div class="text-overlay">💬 Message on WhatsApp</div>
+    </div>
+  </div>
+
+</body>
+</html>
